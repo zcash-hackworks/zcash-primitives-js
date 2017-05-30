@@ -1,0 +1,22 @@
+{
+  "name": "zcashjs-primitives",
+  "version": "0.1.0",
+  "description": "Zcash primitives",
+  "author": "Jack Grigg <jack@z.cash>",
+  "license": "MIT",
+  "main": "src/index.js",
+  "keywords": [
+    "zcash"
+  ],
+  "scripts": {
+    "integration": "mocha test/integration/",
+    "prepublish": "npm run test",
+    "standard": "standard",
+    "test": "npm run standard && npm run unit",
+    "unit": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "3.4.2",
+    "standard": "10.0.2"
+  }
+}
