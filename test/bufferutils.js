@@ -37,7 +37,7 @@ describe('bufferutils', function () {
       })
     })
 
-    fixtures.invalid.readUInt64LE.forEach(function (f) {
+    fixtures.invalid.writeUInt64LE.forEach(function (f) {
       it('throws on ' + f.description, function () {
         var buffer = Buffer.alloc(8, 0)
 
