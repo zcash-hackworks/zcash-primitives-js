@@ -1,0 +1,94 @@
+{
+  "valid": [
+    {
+      "raw": {
+        "a_sk": "0d05ff283bfb519619b4ad0a2a417fcf3e0782de56e7ebd508cfbf365401d18f",
+        "a_pk": "c47235aa758c7fffaa12726e7c3c11b48e116db5373215dabadbaaa6a6d5cde4",
+        "pk_enc": "58230f1e86b26bd34c383e7503e28a195c5f4016f4ed8020b8e642c0b36baf08"
+      },
+      "keyVersion": 43830,
+      "addressVersion": 5786,
+      "key": "SKxthnmAMPWVea6ganJZzPjvFauoLDvgyHHbZy54qMpuFFh2L3nP",
+      "address": "zcZviziuUB45WMY4jnV5Vmx6ZKDLyXzb12QbnWyDofTqZEbeJZF49vVNi75UgiuzXFytgJ6bJoq22gUsANBS4BjUfFudBMu"
+    },
+    {
+      "raw": {
+        "a_sk": "0fcdb3870de951df0fee40a35380127c4dcb7c964dab356faa4b43b0da4602fa",
+        "a_pk": "0658e1ea67b8adf24b706c54949b35d8cf385080a84f06a318eeb195b04a1a35",
+        "pk_enc": "d00fdb5cbf7c57c0df14ee44e24653debf3e7e3ae446cf29ffd9e1d59a74303a"
+      },
+      "keyVersion": 43830,
+      "addressVersion": 5786,
+      "key": "SKxuvoZevPsBHMhQ96wEN8rU4BCR3vwNFyA1W1AbsMMe2Ts4E2BC",
+      "address": "zc94F8QLFHXR4unq4njynUGcQ3cpyC9CNeoZhrPq5VsKrwKDGea79mZPTuCmzixF5wFi9zNaXpRS2fPYaz4bNTUCkPMfgG1"
+    },
+    {
+      "raw": {
+        "a_sk": "0473fcb81c85f84f15b6449bb678500c4e675f26e8b47d3380a08442bd28a541",
+        "a_pk": "141687f6df6c101be90517243281fe70f02bba59ab0a24bc804c49567d077450",
+        "pk_enc": "40e2e2663801419181b5bd00d7e72e1e03f6aaab701726aa1363ebd1a27a250e"
+      },
+      "keyVersion": 44040,
+      "addressVersion": 5814,
+      "key": "ST13FvCzYJWFmDATmpVgeG14HXgHPSaNMkiU4ynyuNADq11xUEq1",
+      "address": "ztLdfP3bNQ8kHeuxyZyoDHN79KKrpVJq9yMAZ4pKYup76sAG1oUH98egwYXFRjFWmUXHuuX2ypLtZE6k7ycYShJhMpw3g8K"
+    },
+    {
+      "raw": {
+        "a_sk": "0888cd0d3d859403f3243e0e3261ec1f0ef3145c1a5e8a382a26e1e3c8ae452b",
+        "a_pk": "f74f556fd6fd8e73963875f6d825502dabe802c1a3ff9bca76b121549cb0e505",
+        "pk_enc": "39bbc4529383d4e65b75658628521d5691ad30731ef503577752d45e36d63905"
+      },
+      "keyVersion": 44040,
+      "addressVersion": 5814,
+      "key": "ST154AnoeTzvZ1UqbumkGwvVaq1jds3FNEPxDgTuogYkKgPkGZwj",
+      "address": "ztrMqKR8HndoCoGmPxFA7Yq2YjjyBXCzDWd5MGc9px6Uz5r8LDYvHtnQH7n7QQmZxVJTfWdCYbDqaf9yWLXn74AophUVxZZ"
+    }
+  ],
+  "invalid": {
+    "fromZAddress": [
+      {
+        "exception": "Invalid checksum",
+        "addressVersion": 5786,
+        "address": "zcZviziuUB45WMY4jnV5Vmx6ZKDLyXzb12QbnWyDofTqZEbeJZF49vVNi75UgiuzXFytgJ6bJoq22gUsANBS4BjUfFudBMv"
+      },
+      {
+        "exception": "Expected property \"1\" of type Buffer(Length: 32), got Buffer(Length: 31)",
+        "addressVersion": 5786,
+        "address": "E45HhnFUkK8wwgYWPqNKEmd3csM1uENCnKSjmkVbcww7UExRmJj9sWLa1hoKxfx44geMmhaSSnW1EXF1wggyRjm4cX3fiw"
+      },
+      {
+        "exception": "PaymentAddress has unexpected data",
+        "addressVersion": 5786,
+        "address": "5PHzL8MmxawNatZe7Vqkvr1QBXdPVAXoB57DAXuH9WxmTKH1ueVK2vP6EpRpmCKzttZ876STgRbgwYRFzQLV3b4NV5X29CmcE"
+      },
+      {
+        "exception": "ztLdfP3bNQ8kHeuxyZyoDHN79KKrpVJq9yMAZ4pKYup76sAG1oUH98egwYXFRjFWmUXHuuX2ypLtZE6k7ycYShJhMpw3g8K has no matching z-address",
+        "addressVersion": 5786,
+        "address": "ztLdfP3bNQ8kHeuxyZyoDHN79KKrpVJq9yMAZ4pKYup76sAG1oUH98egwYXFRjFWmUXHuuX2ypLtZE6k7ycYShJhMpw3g8K"
+      }
+    ],
+    "fromZKey": [
+      {
+        "exception": "Invalid checksum",
+        "keyVersion": 43830,
+        "key": "SKxthnmAMPWVea6ganJZzPjvFauoLDvgyHHbZy54qMpuFFh2L3nQ"
+      },
+      {
+        "exception": "Expected property \"1\" of type Buffer(Length: 32), got Buffer(Length: 31)",
+        "keyVersion": 43830,
+        "key": "6jp6pku9TphDP795tcBn5r76ipZMU1fSpeDpi11vS1BrSpiiqCx"
+      },
+      {
+        "exception": "SpendingKey has unexpected data",
+        "keyVersion": 43830,
+        "key": "2vnhhD2yvGzMBSq65i6xYcKNS3Ng3Vr3yRQtFaWUwvSvRbuSSqg77N"
+      },
+      {
+        "exception": "ST13FvCzYJWFmDATmpVgeG14HXgHPSaNMkiU4ynyuNADq11xUEq1 has no matching z-key",
+        "keyVersion": 43830,
+        "key": "ST13FvCzYJWFmDATmpVgeG14HXgHPSaNMkiU4ynyuNADq11xUEq1"
+      }
+    ]
+  }
+}

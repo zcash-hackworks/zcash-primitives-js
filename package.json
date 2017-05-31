@@ -24,6 +24,8 @@
     "standard": "10.0.2"
   },
   "dependencies": {
+    "bs58check": "2.0.2",
+    "libsodium-wrappers-sumo": "0.5.1",
     "typeforce": "1.11.1"
   }
 }
