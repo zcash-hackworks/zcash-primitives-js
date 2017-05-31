@@ -22,5 +22,8 @@
     "mocha": "3.4.2",
     "nyc": "10.3.2",
     "standard": "10.0.2"
+  },
+  "dependencies": {
+    "typeforce": "1.11.1"
   }
 }
