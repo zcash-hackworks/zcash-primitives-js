@@ -9,14 +9,18 @@
     "zcash"
   ],
   "scripts": {
+    "coverage-report": "nyc report --reporter=lcov",
+    "coverage-html": "nyc report --reporter=html",
+    "coverage": "nyc --check-coverage --branches 90 --functions 90 mocha",
     "integration": "mocha test/integration/",
     "prepublish": "npm run test",
     "standard": "standard",
-    "test": "npm run standard && npm run unit",
+    "test": "npm run standard && npm run coverage",
     "unit": "mocha"
   },
   "devDependencies": {
     "mocha": "3.4.2",
+    "nyc": "10.3.2",
     "standard": "10.0.2"
   }
 }
