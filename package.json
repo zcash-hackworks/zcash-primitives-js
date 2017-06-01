@@ -26,6 +26,7 @@
   "dependencies": {
     "bs58check": "2.0.2",
     "libsodium-wrappers-sumo": "0.5.1",
-    "typeforce": "1.11.1"
+    "typeforce": "1.11.1",
+    "varuint-bitcoin": "1.0.4"
   }
 }
