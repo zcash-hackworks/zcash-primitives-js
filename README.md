@@ -1,5 +1,7 @@
 # zcash-primitives
 
+[![NPM](https://img.shields.io/npm/v/zcash-primitives.svg)](https://www.npmjs.org/package/zcash-primitives)
+
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 
