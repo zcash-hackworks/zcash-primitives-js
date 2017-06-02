@@ -83,4 +83,8 @@ NotePlaintext.prototype.note = function (aPk) {
   return new Note(aPk, this.value, this.rho, this.r)
 }
 
+NotePlaintext.prototype.encrypt = function (encryptor, pkEnc) {
+  return encryptor.encrypt(pkEnc, this.toBuffer())
+}
+
 module.exports = NotePlaintext
