@@ -18,6 +18,21 @@
     "test": "npm run standard && npm run coverage",
     "unit": "mocha"
   },
+  "standard": {
+    "ignore": [
+      "src/blake2b.js"
+    ]
+  },
+  "nyc": {
+    "exclude": [
+      "src/blake2b.js",
+      "test",
+      "test{,-*}.js",
+      "**/*.test.js",
+      "**/__tests__/**",
+      "**/node_modules/**"
+    ]
+  },
   "devDependencies": {
     "mocha": "3.4.2",
     "nyc": "10.3.2",
