@@ -1,5 +1,5 @@
 {
-  "name": "zcashjs-primitives",
+  "name": "zcash-primitives",
   "version": "0.1.0",
   "description": "Zcash primitives",
   "author": "Jack Grigg <jack@z.cash>",
