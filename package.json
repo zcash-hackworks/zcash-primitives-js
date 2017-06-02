@@ -8,6 +8,10 @@
   "keywords": [
     "zcash"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zcash/zcash-primitives-js.git"
+  },
   "scripts": {
     "coverage-report": "nyc report --reporter=lcov",
     "coverage-html": "nyc report --reporter=html",
