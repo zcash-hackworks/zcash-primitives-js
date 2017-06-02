@@ -29,15 +29,38 @@ var PaymentAddress = typeforce.compile({
 var SpendingKey = typeforce.compile({
   a_sk: Buffer252bit
 })
+var ZCIncrementalMerkleTree = typeforce.compile({
+  left: typeforce.maybe(typeforce.BufferN(32)),
+  right: typeforce.maybe(typeforce.BufferN(32)),
+  parents: [typeforce.maybe(typeforce.BufferN(32))]
+})
+var ZCIncrementalWitness = typeforce.compile({
+  tree: ZCIncrementalMerkleTree,
+  filled: [typeforce.BufferN(32)],
+  cursor: typeforce.maybe(ZCIncrementalMerkleTree)
+})
+var JSInput = typeforce.compile({
+  witness: ZCIncrementalWitness,
+  note: Note,
+  key: SpendingKey
+})
+var JSOutput = typeforce.compile({
+  addr: PaymentAddress,
+  value: Zatoshi,
+  memo: typeforce.Buffer
+})
 
 // extend typeforce types with ours
 var types = {
   BoolNum: BoolNum,
   Buffer252bit: Buffer252bit,
   Buffer256bit: typeforce.BufferN(32),
+  JSInput: JSInput,
+  JSOutput: JSOutput,
   Note: Note,
   PaymentAddress: PaymentAddress,
   SpendingKey: SpendingKey,
+  ZCIncrementalWitness: ZCIncrementalWitness,
   Zatoshi: Zatoshi
 }
 
