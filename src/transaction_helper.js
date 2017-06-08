@@ -1,9 +1,18 @@
+var sodium = require('libsodium-wrappers-sumo')
+var typeforce = require('typeforce')
+var types = require('./types')
 var varuint = require('varuint-bitcoin')
+var zmq = require('zeromq')
 
 var JSDescription = require('./jsdescription')
+var JSInput = require('./jsinput')
+var JSOutput = require('./jsoutput')
+var ZCProof = require('./proof')
 
 function TransactionHelper () {
   this.jss = []
+
+  this._jsouts = []
 }
 
 TransactionHelper.fromTransactionBuffer = function (version, buffer) {
@@ -95,6 +104,104 @@ TransactionHelper.prototype.toBuffer = function (version) {
   }
 
   return buffer
+}
+
+TransactionHelper.prototype.numJoinSplits = function (version) {
+  if (version >= 2) {
+    if (this._jsouts.length) {
+      return Math.ceil(this._jsouts.length / 2)
+    } else {
+      return Math.ceil(this.jss.length / 2)
+    }
+  } else {
+    return 0
+  }
+}
+
+TransactionHelper.prototype.addShieldedOutput = function (addr, value, memo) {
+  typeforce(types.tuple(
+    types.PaymentAddress,
+    types.Zatoshi,
+    types.maybe(types.Buffer)
+  ), arguments)
+
+  // Add the JSOutput and return the JSOutput's index
+  return (this._jsouts.push(new JSOutput(addr, value, memo)) - 1)
+}
+
+TransactionHelper.prototype.setAnchor = function (anchor) {
+  typeforce(types.Buffer256bit, anchor)
+
+  this._anchor = anchor
+}
+
+TransactionHelper.prototype.getProofs = function (provingServiceUri, callbackfn) {
+  if (!this._anchor) throw new Error('Must call setAnchor() before getProofs()')
+
+  var keyPair = sodium.crypto_sign_keypair()
+  this.joinSplitPubKey = Buffer.from(keyPair.publicKey)
+
+  for (var i = 0; i < this._jsouts.length; i += 2) {
+    var inputs = [
+      JSInput.dummy(),
+      JSInput.dummy()
+    ]
+
+    var outputs = [
+      this._jsouts[i],
+      this._jsouts[i + 1] || JSOutput.dummy()
+    ]
+
+    var value = outputs.reduce(function (sum, output) { return sum + output.value }, 0)
+    this.jss.push(JSDescription.withWitness(inputs, outputs, this.joinSplitPubKey, value, 0, this._anchor))
+  }
+
+  var request = Buffer.alloc(
+    varuint.encodingLength(this.jss.length) +
+    this.jss.reduce(function (sum, jsdesc) { return sum + jsdesc.witness.byteLength() }, 0)
+  )
+  var offset = 0
+  function writeSlice (slice) {
+    slice.copy(request, offset)
+    offset += slice.length
+  }
+
+  function writeVarInt (i) {
+    varuint.encode(i, request, offset)
+    offset += varuint.encode.bytes
+  }
+
+  writeVarInt(this.jss.length)
+  this.jss.forEach(function (jsdesc) {
+    writeSlice(jsdesc.witness.toBuffer())
+  })
+
+  var sock = zmq.socket('req')
+  sock.connect(provingServiceUri)
+  sock.send(request)
+
+  sock.on('message', function (msg) {
+    var offset = 0
+    function readVarInt () {
+      var vi = varuint.decode(msg, offset)
+      offset += varuint.decode.bytes
+      return vi
+    }
+
+    function readZCProof () {
+      var proof = ZCProof.fromBuffer(msg.slice(offset), true)
+      offset += proof.byteLength()
+      return proof
+    }
+
+    var proofsLen = readVarInt()
+    for (var i = 0; i < proofsLen; ++i) {
+      this.jss[i].proof = readZCProof()
+    }
+
+    sock.close()
+    callbackfn()
+  }.bind(this))
 }
 
 module.exports = TransactionHelper
