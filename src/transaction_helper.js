@@ -9,6 +9,10 @@ var JSInput = require('./jsinput')
 var JSOutput = require('./jsoutput')
 var ZCProof = require('./proof')
 
+// Common constants across implementations
+var NOT_AN_INPUT = 65535
+var SIGHASH_ALL = 0x01
+
 function TransactionHelper () {
   this.jss = []
 
@@ -140,6 +144,7 @@ TransactionHelper.prototype.getProofs = function (provingServiceUri, callbackfn)
 
   var keyPair = sodium.crypto_sign_keypair()
   this.joinSplitPubKey = Buffer.from(keyPair.publicKey)
+  this._joinSplitPrivKey = Buffer.from(keyPair.privateKey)
 
   for (var i = 0; i < this._jsouts.length; i += 2) {
     var inputs = [
@@ -202,6 +207,18 @@ TransactionHelper.prototype.getProofs = function (provingServiceUri, callbackfn)
     sock.close()
     callbackfn()
   }.bind(this))
+}
+
+TransactionHelper.prototype.signShielded = function (signatureHashFn) {
+  // Empty output script
+  var scriptCode = Buffer.alloc(0)
+  var dataToBeSigned = signatureHashFn(NOT_AN_INPUT, scriptCode, SIGHASH_ALL)
+
+  // Add the signature
+  this.joinSplitSig = Buffer.from(sodium.crypto_sign_detached(dataToBeSigned, this._joinSplitPrivKey))
+
+  // Sanity check
+  sodium.crypto_sign_verify_detached(this.joinSplitSig, dataToBeSigned, this.joinSplitPubKey)
 }
 
 module.exports = TransactionHelper
