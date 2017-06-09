@@ -276,7 +276,7 @@ JSDescription.withWitness = function (inputs, outputs, pubKeyHash, vpubOld, vpub
     jsdesc.ciphertexts.push(pt.encrypt(encryptor, outputs[i].addr.pk_enc))
   })
 
-  jsdesc.ephemeralKey = encryptor.epk
+  jsdesc.onetimePubKey = encryptor.epk
 
   // Authenticate hSig with each of the input
   // spending keys, producing macs which protect
