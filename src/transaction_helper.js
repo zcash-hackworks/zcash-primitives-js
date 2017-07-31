@@ -162,6 +162,7 @@ TransactionHelper.prototype.getProofs = function (provingServiceUri, callbackfn)
   }
 
   var request = Buffer.alloc(
+    4 +
     varuint.encodingLength(this.jss.length) +
     this.jss.reduce(function (sum, jsdesc) { return sum + jsdesc.witness.byteLength() }, 0)
   )
@@ -171,11 +172,17 @@ TransactionHelper.prototype.getProofs = function (provingServiceUri, callbackfn)
     offset += slice.length
   }
 
+  function writeUInt32 (i) {
+    request.writeUInt32LE(i, offset)
+    offset += 4
+  }
+
   function writeVarInt (i) {
     varuint.encode(i, request, offset)
     offset += varuint.encode.bytes
   }
 
+  writeUInt32(0)
   writeVarInt(this.jss.length)
   this.jss.forEach(function (jsdesc) {
     writeSlice(jsdesc.witness.toBuffer())
@@ -187,6 +194,12 @@ TransactionHelper.prototype.getProofs = function (provingServiceUri, callbackfn)
 
   sock.on('message', function (msg) {
     var offset = 0
+    function readUInt32 () {
+      var i = msg.readUInt32LE(offset)
+      offset += 4
+      return i
+    }
+
     function readVarInt () {
       var vi = varuint.decode(msg, offset)
       offset += varuint.decode.bytes
@@ -199,6 +212,7 @@ TransactionHelper.prototype.getProofs = function (provingServiceUri, callbackfn)
       return proof
     }
 
+    var proofsVersion = readUInt32()
     var proofsLen = readVarInt()
     for (var i = 0; i < proofsLen; ++i) {
       this.jss[i].proof = readZCProof()
